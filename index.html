@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buquesmari | Flores Eternas</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     
+    <link rel="icon" href="logo.png" type="image/png">
+    
+    <style>
+
+        :root {
+            --color-primary: #5b9bd5;    
+            --color-secondary: #6b8296;  
+            --color-accent: #87ceeb;     
+            --color-btn-hover: #6cbbe0;  
+            --bg-body: #f4f9ff;          
+            --bg-light: #e6f2ff;         
+            --bg-decoration: #dbeafe;    
+            --color-whatsapp: #25D366;   
+            --container-width: 1140px;
+            --navbar-height: 120px; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--color-secondary); background-color: var(--bg-body); line-height: 1.6; overflow-x: hidden; width: 100%; }
+        h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--color-primary); }
+        a { text-decoration: none; transition: all 0.3s ease; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; }
+
+       
+        .mt-20 { margin-top: 20px; }
+        .mt-50 { margin-top: 50px; }
+
+       
+        #loader-wrapper { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #f4f9ff; z-index: 9999; 
+            display: flex; justify-content: center; align-items: center; 
+            transition: opacity 0.8s; 
+        }
+        .loader-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+   
+        .blob-bg { 
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 300px; 
+            height: 300px; 
+            background: #dbeafe; 
+            border-radius: 50%; 
+            animation: pulse 2s infinite; 
+            z-index: -1; 
+        }
+        .loader-logo-img { 
+            width: 200px; 
+            margin-bottom: 20px; 
+            display: block; 
+        }
+        .loader-tag { 
+            font-size: 0.75rem; letter-spacing: 3px; 
+            text-transform: uppercase; color: var(--color-secondary); 
+            font-weight: 600; 
+        }
+
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--navbar-height);
+            background: rgba(244, 249, 255, 0.98); backdrop-filter: blur(10px);
+            z-index: 1000; display: flex; justify-content: center; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+        .nav-container {
+            max-width: var(--container-width); width: 100%; height: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px;
+        }
+        .brand-logo { display: flex; align-items: center; height: 100%; text-decoration: none; }
+
+
+        .logo-img-custom {
+            height: 100px; 
+            width: auto;
+            object-fit: contain;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .nav-menu { display: flex; gap: 40px; }
+        .nav-menu a { color: var(--color-secondary); font-weight: 500; font-size: 1rem; position: relative; }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--color-primary); }
+        .nav-menu a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--color-accent); transition: width 0.3s; }
+        .nav-menu a:hover::after { width: 100%; }
+
+        .hamburger { display: none; color: var(--color-primary); font-size: 1.8rem; cursor: pointer; }
+
+    
+        .hero {
+            min-height: 100vh;
+          
+            padding-top: var(--navbar-height); 
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+            background: radial-gradient(circle at top right, #e6f2ff 0%, #f4f9ff 100%);
+        }
+        .hero-bg-decoration { position: absolute; top: 0; right: 0; width: 60%; height: 100%; background: radial-gradient(circle at center, #dbeafe 0%, transparent 60%); z-index: -1; opacity: 0.5; }
+        .container { max-width: var(--container-width); width: 100%; margin: 0 auto; padding: 0 20px; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        
+        .badge-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: white; border-radius: 30px; font-size: 0.85rem; color: var(--color-secondary); margin-bottom: 25px; box-shadow: 0 2px 10px rgba(135, 206, 235, 0.15); }
+        .hero-title { font-size: 4rem; margin-bottom: 20px; color: var(--color-primary); line-height: 1.1; }
+        .text-highlight { color: var(--color-accent); font-style: italic; }
+        .hero-description { font-size: 1.15rem; margin-bottom: 35px; max-width: 90%; }
+        
+    
+        .hero-actions { display: flex; gap: 15px; margin-bottom: 40px; }
+        
+        .hero-visual { position: relative; display: flex; justify-content: center; }
+        .organic-blob { position: absolute; width: 120%; height: 120%; background: #dbeafe; z-index: -1; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; animation: morph 8s ease-in-out infinite; }
+        .hero-img { border-radius: 20px; box-shadow: 0 20px 40px rgba(74, 144, 226, 0.15); }
+        .floating-anim { animation: float 6s ease-in-out infinite; }
+
+    
+        .section-padding { padding: 100px 0; }
+        .bg-light { background-color: var(--bg-light); }
+        .center-text { text-align: center; }
+        
+     
+        .gallery-grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        .product-card { background: white; border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #e1effe; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(135, 206, 235, 0.2); }
+        .card-image { position: relative; height: 320px; background: #e6f2ff; overflow: hidden; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .product-card:hover .card-image img { transform: scale(1.05); }
+        .tag { position: absolute; top: 15px; left: 15px; background: white; padding: 5px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--color-primary); }
+        .card-info { padding: 25px; text-align: center; }
+        .link-arrow { font-size: 0.9rem; font-weight: 600; color: var(--color-accent); display: inline-flex; align-items: center; gap: 5px; text-decoration: none; }
+        .link-arrow:hover { transform: translateX(5px); }
+
+        
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .about-img-wrapper img { border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .experience-badge { position: absolute; bottom: -20px; right: -20px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        .overline { display: block; font-size: 0.75rem; letter-spacing: 2px; color: var(--color-accent); font-weight: 600; text-transform: uppercase; margin-bottom: 10px; }
+        .features-list li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .features-list i { color: var(--color-accent); }
+
+    
+        .cta-banner-section { padding: 100px 0; background: white; text-align: center; }
+        .social-actions { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .btn-social { padding: 16px 32px; border-radius: 8px; color: white; font-weight: 600; display: flex; align-items: center; gap: 10px; text-decoration: none; transition: 0.3s; }
+        .btn-social:hover { transform: translateY(-3px); opacity: 0.9; }
+        .instagram { background: linear-gradient(45deg, #f09433, #bc1888); }
+        .whatsapp { background: #25D366; }
+
+        
+        .main-footer { padding: 50px 0; border-top: 1px solid #dbeafe; margin-top: 50px; background-color: #f4f9ff; text-align: center; }
+        .footer-flex { display: flex; justify-content: space-between; align-items: center; }
+        .footer-brand { display: flex; align-items: center; gap: 10px; }
+        .footer-social { display: flex; gap: 20px; font-size: 1.2rem; }
+        .footer-social a { color: var(--color-primary); }
+
+   
+        .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 30px; border-radius: 8px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background-color: var(--color-accent); color: white; box-shadow: 0 4px 15px rgba(135, 206, 235, 0.5); }
+        .btn-primary:hover { transform: translateY(-3px); background-color: var(--color-btn-hover); }
+        .btn-outline { border: 1px solid var(--color-accent); color: var(--color-primary); }
+        .btn-outline:hover { border-color: var(--color-primary); background: white; }
+        .btn-outline-sm { padding: 10px 24px; border: 1px solid var(--color-accent); border-radius: 30px; color: var(--color-secondary); font-size: 0.9rem; }
+        .btn-outline-sm:hover { color: var(--color-primary); border-color: var(--color-primary); background: white; }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background-color: var(--color-whatsapp); color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 10000; animation: pulse-green 2s infinite; transition: 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+     
+        @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.05); } 100% { transform: translate(-50%, -50%) scale(1); } }
+        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        @keyframes morph { 0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 50% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } }
+        
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: 0.8s ease-out; }
+        .reveal-left { opacity: 0; transform: translateX(40px); transition: 0.8s ease-out; }
+        .reveal-right { opacity: 0; transform: translateX(-40px); transition: 0.8s ease-out; }
+        .active { opacity: 1; transform: translate(0); }
+        .delay-100 { transition-delay: 0.1s; } .delay-200 { transition-delay: 0.2s; } .delay-300 { transition-delay: 0.3s; }
+
+   
+        @media (max-width: 768px) {
+            :root { --navbar-height: 100px; }
+            .navbar { height: 80px; } 
+            .logo-img-custom { height: 60px !important; }
+            .hero, .section-padding { padding-top: 100px !important; }
+            .hero-title { font-size: 2.8rem; }
+            .hero-grid, .about-grid, .footer-flex { grid-template-columns: 1fr; text-align: center; display: block; }
+            .footer-brand, .footer-social { justify-content: center; margin-bottom: 20px; }
+            .nav-menu { display: none; } 
+            .hamburger { display: block; }
+            .hero-actions { justify-content: center; }
+            .steps-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <div class="blob-bg"></div>
+            <img src="logo.png" class="loader-logo-img" alt="Buquesmari Logo">
+            <p class="loader-tag">FLORES ETERNAS</p>
+        </div>
+    </div>
+
+    <a href="https://wa.me/5518998112408" class="whatsapp-float" target="_blank" title="Fale conosco no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="logo.png" alt="Buquesmari" class="logo-img-custom">
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="galeria.html">Galeria</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="encomenda.html">Encomendar</a></li>
+            </ul>
+
+            <div class="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-bg-decoration"></div>
+
+        <div class="container hero-grid">
+            <div class="hero-content reveal-up">
+                <div class="badge-pill">
+                    <i class="fas fa-sparkles"></i> Feito à mão com amor
+                </div>
+                
+                <h1 class="hero-title">
+                    Buquês de Cetim <br>
+                    <span class="text-highlight">Que Nunca Murcham</span>
+                </h1>
+                
+                <p class="hero-description">
+                    Beleza eterna feita artesanalmente. Cada buquê é uma obra de arte única, desenhada para celebrar seus momentos mais preciosos para sempre.
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="encomenda.html" class="btn btn-primary">
+                        Encomendar Buquê <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="galeria.html" class="btn btn-outline">
+                        Ver Galeria Completa
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual reveal-left delay-200">
+                <div class="organic-blob"></div>
+                <div class="image-container">
+                    <img src="foto.png" alt="Buquê de Cetim Buquesmari" class="hero-img floating-anim">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div class="section-header center-text reveal-up">
+                <span class="overline">NOSSAS CRIAÇÕES</span>
+                <h2>Coleção Destaque</h2>
+                <p>Alguns dos nossos modelos favoritos. Visite a galeria para ver tudo.</p>
+            </div>
+
+            <div class="gallery-grid-layout">
+                <div class="product-card reveal-up delay-100">
+                    <div class="card-image">
+                        <span class="tag">Mais Pedido</span>
+                        <img src="img1.png" alt="Buquê Azul">
+                    </div>
+                    <div class="card-info">
+                        <h3>Dusty Blue Dream</h3>
+                        <p>Elegância em tons de Roxo</p>
+                        <a href="encomenda.html" class="link-arrow">Encomendar</a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal-up delay-200">
+                    <div class="card-image">
+                        <span class="tag">Novo</span>
+                        <img src="img6.png" alt="Buquê Rosa">
+                    </div>
+                    <div class="card-info">
+                        <h3>Blush Garden</h3>
+                        <p>Romantismo em rosa suave e creme.</p>
+                        <a href="encomenda.html" class="link-arrow">Encomendar</a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal-up delay-300">
+                    <div class="card-image">
+                        <img src="img2.png" alt="Buquê Branco">
+                    </div>
+                    <div class="card-info">
+                        <h3>Classic red</h3>
+                        <p>A beleza do veremelho .</p>
+                        <a href="encomenda.html" class="link-arrow">Encomendar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="center-text mt-50">
+                <a href="galeria.html" class="btn btn-outline-sm">Explorar Todos os Designs</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding">
+        <div class="container about-grid">
+            <div class="about-img-wrapper reveal-right">
+                <img src="https://angelsfloresepresentes.com.br/admin/imagens/produtos/1545ab5f3aef2ed52850734c9eef9a63.png" alt="Artesã Buquesmari">
+                <div class="experience-badge">
+                    <span class="number">100%</span>
+                    <span class="text">Artesanal</span>
+                </div>
+            </div>
+            <div class="about-content reveal-left">
+                <span class="overline">NOSSA HISTÓRIA</span>
+                <h2>Feito com Paixão,<br>Feito para Durar</h2>
+                <p>Na Buquesmari, acreditamos que a beleza deve ser eterna. Ao contrário das flores frescas que murcham, nossos buquês de cetim são memórias tangíveis que você pode guardar para sempre.</p>
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle"></i> Cetim de alta qualidade</li>
+                    <li><i class="fas fa-check-circle"></i> Personalização total de cores</li>
+                    <li><i class="fas fa-check-circle"></i> Acabamento de luxo</li>
+                </ul>
+                <a href="sobre.html" class="btn btn-primary mt-20">Saiba Mais</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="order" class="cta-banner-section">
+        <div class="container">
+            <div class="cta-box reveal-up">
+                <span class="overline-center">FAÇA SEU PEDIDO</span>
+                <h2 class="cta-title">Vamos Criar Juntos</h2>
+                <p class="cta-desc">Pronta para ter seu próprio buquê eterno? Entre em contato pelo seu método preferido e vamos dar vida à sua visão.</p>
+                
+                <div class="social-actions">
+                    <a href="https://www.instagram.com/buquesmari/" target="_blank" class="btn-social instagram">
+                        <i class="fab fa-instagram"></i> Mensagem no Instagram
+                    </a>
+                    <a href="https://wa.me/5518998112408" target="_blank" class="btn-social whatsapp">
+                        <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
+                    </a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container footer-flex">
+            <div class="footer-brand">
+                <img src="logo.png" alt="Buquesmari" style="height: 40px; display:inline-block; vertical-align:middle;">
+                <span style="margin-left:10px; font-family:'Playfair Display'; color:#5b9bd5; font-weight:700;">Buquesmari</span>
+            </div>
+            <div class="footer-copy">
+                &copy; 2024 Buquesmari. Todos os direitos reservados.
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    
+            if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+            window.scrollTo(0, 0);
+            
+            // Loader Delay
+            setTimeout(() => {
+                const loader = document.getElementById('loader-wrapper');
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 800);
+            }, 1000);
+
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) { entry.target.classList.add('active'); }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            if(hamburger) {
+                hamburger.addEventListener('click', () => {
+                    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                    if(navMenu.style.display === 'flex') {
+                       navMenu.style.flexDirection = 'column';
+                       navMenu.style.position = 'absolute';
+                       navMenu.style.top = '80px';
+                       navMenu.style.left = '0';
+                       navMenu.style.width = '100%';
+                       navMenu.style.background = 'rgba(244,249,255,0.98)';
+                       navMenu.style.padding = '20px';
+                       navMenu.style.textAlign = 'center';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
