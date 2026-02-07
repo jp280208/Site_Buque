@@ -106,7 +106,14 @@
         .nav-menu a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--color-accent); transition: width 0.3s; }
         .nav-menu a:hover::after { width: 100%; }
 
-        .hamburger { display: none; color: var(--color-primary); font-size: 1.8rem; cursor: pointer; }
+        /* MUDANÇA AQUI: Estilo para o ícone de 3 pontinhos */
+        .hamburger { 
+            display: none; 
+            color: var(--color-primary); 
+            font-size: 1.8rem; 
+            cursor: pointer;
+            padding: 10px;
+        }
 
     
         .hero {
@@ -241,8 +248,7 @@
             </ul>
 
             <div class="hamburger">
-                <div class="bar"></div>
-                <div class="bar"></div>
+                <i class="fas fa-ellipsis-v"></i>
             </div>
         </div>
     </nav>
