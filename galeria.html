@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buquesmari | Galeria</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+         
+    <link rel="icon" href="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-blue-floral-bouquet-with-watercolor-png-image_10274810.png" type="image/png">
+    
+    <style>
+       
+        :root {
+            --color-primary: #5b9bd5;    
+            --color-secondary: #6b8296;  
+            --color-accent: #87ceeb;     
+            --bg-body: #f4f9ff;          
+            --bg-card: #ffffff;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); color: var(--color-secondary); background-color: var(--bg-body); overflow-x: hidden; }
+        
+    
+        .navbar { position: fixed; top: 0; width: 100%; height: 80px; background: rgba(244,249,255,0.95); backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: center; border-bottom: 1px solid rgba(255,255,255,0.6); }
+        .nav-container { width: 1140px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .brand-logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--color-primary); text-decoration: none; display: flex; flex-direction: column; line-height: 1; }
+        .brand-sub { font-family: var(--font-body); font-size: 0.5rem; letter-spacing: 2px; color: var(--color-secondary); margin-top: 4px; text-transform: uppercase; }
+        .nav-menu { display: flex; gap: 35px; list-style: none; }
+        .nav-menu a { text-decoration: none; color: var(--color-secondary); font-weight: 500; font-size: 0.95rem; transition: 0.3s; }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--color-primary); }
+        .hamburger { display: none; color: var(--color-primary); font-size: 1.5rem; cursor: pointer; }
+
+        .gallery-page { padding-top: 120px; padding-bottom: 80px; text-align: center; }
+        .header-content h1 { font-family: var(--font-heading); color: var(--color-primary); font-size: 3rem; margin-bottom: 10px; }
+        .header-content p { color: var(--color-secondary); font-size: 1.1rem; margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .overline { display: block; font-size: 0.75rem; letter-spacing: 2px; color: var(--color-accent); font-weight: 600; text-transform: uppercase; margin-bottom: 15px; }
+
+    
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+        .product-card { background: var(--bg-card); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(135, 206, 235, 0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; text-align: center; padding-bottom: 30px; border: 1px solid #e6f3ff; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(135, 206, 235, 0.25); }
+        .card-image-wrapper { position: relative; height: 320px; background-color: #eaf6ff; overflow: hidden; }
+        .card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .product-card:hover .card-image-wrapper img { transform: scale(1.05); }
+        .tag { position: absolute; top: 15px; left: 15px; background: white; padding: 6px 14px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--color-primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); z-index: 2; }
+        .card-info { padding: 25px 20px 10px; }
+        .card-info h3 { font-family: var(--font-heading); color: var(--color-primary); font-size: 1.5rem; margin-bottom: 10px; }
+        .card-info p { font-size: 0.9rem; color: #7a8fa3; margin-bottom: 20px; line-height: 1.5; padding: 0 10px; }
+        .btn-link { text-decoration: none; color: var(--color-accent); font-weight: 600; font-size: 0.9rem; transition: 0.3s; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-link:hover { color: var(--color-primary); gap: 10px; }
+
+        .explore-btn-container { margin-top: 70px; }
+        .btn-explore { display: inline-block; padding: 16px 45px; background: var(--color-accent); color: white; border-radius: 30px; text-decoration: none; font-weight: 500; font-size: 1rem; transition: 0.3s; box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4); }
+        .btn-explore:hover { background: var(--color-primary); transform: translateY(-3px); }
+
+      
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 9000; transition: 0.3s; animation: pulse-green 2s infinite; text-decoration: none; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7); } 70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+
+      
+        #loader-wrapper { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--bg-body); z-index: 9999; 
+            display: flex; justify-content: center; align-items: center; 
+            transition: opacity 0.8s; 
+        }
+        .loader-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+  
+        .blob-bg { 
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 300px; 
+            height: 300px; 
+            background: #dbeafe; 
+            border-radius: 50%; 
+            animation: pulse 2s infinite; 
+            z-index: -1; 
+        }
+        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.05); } 100% { transform: translate(-50%, -50%) scale(1); } }
+
+        @media (max-width: 768px) {
+            .header-content h1 { font-size: 2.5rem; }
+            .nav-menu { display: none; } 
+            .hamburger { display: block; }
+            .products-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <div class="blob-bg"></div>
+            <img src="logo.png" style="width: 200px; margin-bottom: 20px; display: block;" alt="Buquesmari">
+            <p style="font-size: 0.7rem; letter-spacing: 3px; color: #6b8296; text-transform: uppercase; font-weight: 600;">ETERNAL BLOOMS</p>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                Buquesmari
+                <span class="brand-sub">FLORES ETERNAS</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="galeria.html" class="active">Galeria</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="encomenda.html">Encomendar</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <a href="https://wa.me/5518998112408" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <section class="gallery-page">
+        <div class="header-content">
+            <span class="overline">NOSSO PORTFÓLIO</span>
+            <h1>Coleção Destaque</h1>
+            <p>Peças exclusivas feitas à mão, onde cada detalhe conta uma história de elegância eterna.</p>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <span class="tag">Mais Pedido</span>
+                    <img src="https://triunfoinformatica.tmakapp.com.br/_core/_uploads/317/2025/08/1303110825ck7j2bf1gh.jpg" alt="Buquê Roxo">
+                </div>
+                <div class="card-info">
+                    <h3>Dusty blue Dream</h3>
+                    <p>Elegância em tons de azul acinzentado, perfeito para presentes clássicos.</p>
+                    <a href="index.html#order" class="btn-link">Encomendar →</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <span class="tag">Clássico</span>
+                    <img src="img6.png" alt="Buquê Rosa">
+                </div>
+                <div class="card-info">
+                    <h3>Blush Garden</h3>
+                    <p>Romantismo em rosa suave e creme, uma escolha delicada e atemporal.</p>
+                    <a href="index.html#order" class="btn-link">Encomendar →</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <img src="img4.png" alt="Buquê Branco">
+                </div>
+                <div class="card-info">
+                    <h3>Classic</h3>
+                    <p>A pureza do roxo.</p>
+                    <a href="index.html#order" class="btn-link">Encomendar →</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <span class="tag">Novo</span>
+                    <img src="img3.png" alt="Buquê Vermelho">
+                </div>
+                <div class="card-info">
+                    <h3>Burgundy Passion</h3>
+                    <p>Tons profundos de vermelho para pessoas que buscam sofisticação e drama.</p>
+                    <a href="index.html#order" class="btn-link">Encomendar →</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <img src="https://img.olx.com.br/images/17/176533440431092.jpg" alt="Buquê amarelo">
+                </div>
+                <div class="card-info">
+                    <h3>Sunset Glow</h3>
+                    <p>Uma mistura vibrante de cores quentes de amarelo, celebrando a alegria.</p>
+                    <a href="index.html#order" class="btn-link">Encomendar →</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <img src="https://i.pinimg.com/736x/8f/4c/ae/8f4caecd0740bf564b3c0f7e1881bf6d.jpg" alt="Buquê Verde">
+                </div>
+                <div class="card-info">
+                    <h3>Green Dreams</h3>
+                    <p>Suaves tons de Verde, trazendo um toque de magia e delicadeza ao seu dia.</p>
+                    <a href="index.html#order" class="btn-link">Encomendar →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="explore-btn-container">
+            <a href="index.html#order" class="btn-explore">Solicitar Orçamento Personalizado</a>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            window.scrollTo(0, 0);
+
+           
+            setTimeout(() => {
+                const loader = document.getElementById('loader-wrapper');
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 800);
+            }, 1000);
+
+           
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            if(hamburger) {
+                hamburger.addEventListener('click', () => {
+                    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                    if(navMenu.style.display === 'flex') {
+                       navMenu.style.flexDirection = 'column';
+                       navMenu.style.position = 'absolute';
+                       navMenu.style.top = '80px';
+                       navMenu.style.left = '0';
+                       navMenu.style.width = '100%';
+                       navMenu.style.background = 'rgba(244,249,255,0.98)';
+                       navMenu.style.padding = '20px';
+                       navMenu.style.textAlign = 'center';
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
