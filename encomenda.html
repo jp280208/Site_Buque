@@ -62,7 +62,7 @@
         .nav-menu a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--color-accent); transition: width 0.3s; }
         .nav-menu a:hover::after { width: 100%; }
         
-        .hamburger { display: none; color: var(--color-primary); font-size: 2rem; cursor: pointer; padding: 10px; }
+        .hamburger { display: none; color: var(--color-primary); font-size: 1.8rem; cursor: pointer; }
 
       
         #loader-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s; }
@@ -188,7 +188,7 @@
                 <li><a href="encomenda.html" class="active">Encomendar</a></li>
             </ul>
             <div class="hamburger">
-                <i class="fas fa-ellipsis-v"></i>
+                <i class="fas fa-bars"></i>
             </div>
         </div>
     </nav>
@@ -347,10 +347,13 @@
 
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
+                
+                // Muda a cor do botão visualmente
                 btn.style.backgroundColor = "#48bb78"; 
-                btnText.innerText = "Gerando Pedido...";
-                btnIcon.className = "fas fa-spinner fa-spin";
+                btnText.innerText = "Redirecionando...";
+                btnIcon.className = "fas fa-whatsapp";
 
+                // Coleta os dados
                 const name = document.getElementById('name').value;
                 const phone = document.getElementById('phone').value;
                 const date = document.getElementById('date').value;
@@ -359,19 +362,24 @@
                 const message = document.getElementById('message').value;
                 const whatsappNumber = "5518998112408"; 
 
-                const text = `*Olá, vim pelo site! Gostaria de um orçamento.*%0A%0A` +
-                             `*Nome:* ${name}%0A` +
-                             `*Telefone:* ${phone}%0A` +
-                             `*Data do Evento:* ${date || 'Não informada'}%0A` +
-                             `*Tipo:* ${type}%0A` +
-                             `*Cores:* ${colors}%0A` +
+                // Monta a mensagem
+                const msgContent = `*Olá, vim pelo site! Gostaria de um orçamento.*\n\n` +
+                             `*Nome:* ${name}\n` +
+                             `*Telefone:* ${phone}\n` +
+                             `*Data do Evento:* ${date || 'Não informada'}\n` +
+                             `*Tipo:* ${type}\n` +
+                             `*Cores:* ${colors}\n` +
                              `*Detalhes:* ${message}`;
 
-                setTimeout(() => {
-                    window.open(`https://wa.me/${whatsappNumber}?text=${text}`, '_blank');
-                    btnText.innerText = "Solicitação Enviada!";
-                    btnIcon.className = "fas fa-check";
-                }, 1500);
+                // Codifica para URL segura
+                const encodedMsg = encodeURIComponent(msgContent);
+                
+                // Abre o WhatsApp IMEDIATAMENTE (sem setTimeout) para evitar bloqueio
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodedMsg}`, '_blank');
+
+                // Atualiza o texto do botão
+                btnText.innerText = "Solicitação Enviada!";
+                btnIcon.className = "fas fa-check";
             });
         });
     </script>
