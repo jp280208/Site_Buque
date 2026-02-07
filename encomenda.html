@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buquesmari | Encomendar</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="logo.png" type="image/png">
+    
+    <style>
+ 
+        :root {
+            --color-primary: #5b9bd5;    
+            --color-secondary: #6b8296;  
+            --color-accent: #87ceeb;     
+            --bg-body: #f4f9ff;          
+            --bg-card: #ffffff;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            --navbar-height: 120px; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); color: var(--color-secondary); background-color: var(--bg-body); overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: var(--font-heading); color: var(--color-primary); font-weight: 700; }
+        a { text-decoration: none; transition: 0.3s; }
+        section { padding: 100px 0; }
+
+        .container { max-width: 1140px; width: 100%; margin: 0 auto; padding: 0 20px; }
+
+        .navbar {
+            position: fixed; top: 0; width: 100%; height: var(--navbar-height);
+            background: rgba(244,249,255,0.98); backdrop-filter: blur(10px);
+            z-index: 1000; display: flex; justify-content: center;
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+        
+        .nav-container {
+            width: 1140px; display: flex; justify-content: space-between;
+            align-items: center; padding: 0 20px;
+        }
+        
+        .brand-logo { display: flex; align-items: center; height: 100%; text-decoration: none; }
+        
+      
+        .logo-img-custom {
+            height: 100px; 
+            width: auto;
+            object-fit: contain;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .nav-menu { display: flex; gap: 40px; list-style: none; }
+        .nav-menu a { text-decoration: none; color: var(--color-secondary); font-weight: 500; font-size: 1rem; position: relative; }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--color-primary); }
+        .nav-menu a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--color-accent); transition: width 0.3s; }
+        .nav-menu a:hover::after { width: 100%; }
+        
+        .hamburger { display: none; color: var(--color-primary); font-size: 1.8rem; cursor: pointer; }
+
+      
+        #loader-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s; }
+        
+        .loader-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+     
+        .blob-bg { 
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 300px; 
+            height: 300px; 
+            background: #dbeafe; 
+            border-radius: 50%; 
+            animation: pulse 2s infinite; 
+            z-index: -1; 
+        }
+
+        .loader-logo-img { width: 200px; margin-bottom: 20px; display: block; }
+        .loader-tag { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--color-secondary); font-weight: 600; }
+        
+        /* WHATSAPP */
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 9000; animation: pulse-green 2s infinite; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+  
+        .order-header {
+            padding-top: calc(var(--navbar-height) + 40px); /* 160px */
+            padding-bottom: 40px; text-align: center;
+        }
+        .order-header h1 { font-size: 3rem; margin-bottom: 15px; }
+        .order-header p { font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .overline { display: block; font-size: 0.8rem; letter-spacing: 3px; color: var(--color-accent); font-weight: 600; text-transform: uppercase; margin-bottom: 15px; }
+
+      
+        .steps-section { padding-bottom: 60px; }
+        .steps-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto; text-align: center; }
+        .step-box { background: white; padding: 30px 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(135, 206, 235, 0.1); border: 1px solid #e6f3ff; transition: transform 0.3s; }
+        .step-box:hover { transform: translateY(-5px); }
+        .step-icon { width: 60px; height: 60px; background: #f0f8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem; color: var(--color-primary); }
+        .step-box h3 { font-size: 1.2rem; margin-bottom: 10px; }
+        .step-box p { font-size: 0.9rem; color: #7a8fa3; }
+
+       
+        .form-section { background: white; border-radius: 30px; max-width: 800px; margin: 0 auto; padding: 50px; box-shadow: 0 20px 60px rgba(135, 206, 235, 0.2); border: 1px solid #e6f3ff; position: relative; overflow: hidden; }
+        .form-section::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: radial-gradient(circle, #e6f3ff 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+        .form-title { text-align: center; margin-bottom: 40px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .form-group { display: flex; flex-direction: column; margin-bottom: 5px; position: relative; }
+        .full-width { grid-column: span 2; }
+        
+        label { font-size: 0.9rem; font-weight: 600; color: var(--color-secondary); margin-bottom: 8px; }
+        input, select, textarea { padding: 15px; border: 2px solid #f0f4f8; border-radius: 15px; font-family: 'Inter', sans-serif; background: #fdfdfd; transition: all 0.3s ease; font-size: 1rem; color: #555; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--color-accent); background: white; box-shadow: 0 10px 20px rgba(135, 206, 235, 0.1); transform: scale(1.01); }
+        
+        .color-options { display: flex; gap: 10px; margin-top: 10px; }
+        .color-circle { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .color-circle:hover { transform: scale(1.2); }
+        .c-blue { background: #5b9bd5; } .c-pink { background: #ffb7b2; } .c-red { background: #d9534f; } .c-white { background: #f0f0f0; } .c-purple { background: #b19cd9; }
+
+        .btn-submit { background-color: var(--color-accent); color: white; padding: 18px; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.4s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; position: relative; overflow: hidden; }
+        .btn-submit:hover { background-color: var(--color-primary); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(91, 155, 213, 0.3); }
+        .btn-submit:active { transform: scale(0.98); }
+
+        .direct-contact { text-align: center; margin-top: 60px; }
+        .btn-social { display: inline-flex; align-items: center; gap: 10px; padding: 12px 30px; border-radius: 30px; text-decoration: none; color: white; font-weight: 500; transition: 0.3s; background: linear-gradient(45deg, #f09433, #bc1888); }
+        .btn-social:hover { transform: translateY(-3px); opacity: 0.9; }
+
+        .main-footer { padding: 50px 0; border-top: 1px solid #dbeafe; margin-top: 80px; background-color: #f4f9ff; }
+        .footer-social { display: flex; gap: 20px; justify-content: center; margin-top: 10px; }
+        .footer-social a { color: var(--color-primary); font-size: 1.2rem; }
+
+       
+        @keyframes pulse { 0%{transform:translate(-50%,-50%) scale(1);} 50%{transform:translate(-50%,-50%) scale(1.05);} 100%{transform:translate(-50%,-50%) scale(1);} }
+        @keyframes pulse-green { 0%{box-shadow:0 0 0 0 rgba(37,211,102,0.7);} 70%{box-shadow:0 0 0 15px rgba(37,211,102,0);} 100%{box-shadow:0 0 0 0 rgba(37,211,102,0);} }
+        .reveal-up { opacity: 0; transform: translateY(30px); transition: 0.8s; }
+        .active { opacity: 1; transform: translate(0); }
+
+   
+        @media (max-width: 768px) {
+            :root { --navbar-height: 100px; }
+            .logo-img-custom { height: 60px !important; }
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .nav-menu { display: none; }
+            .hamburger { display: block; }
+            .form-section { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <div class="blob-bg"></div>
+            <img src="logo.png" class="loader-logo-img" alt="Buquesmari Logo">
+            <p class="loader-tag">ENCOMENDAR</p>
+        </div>
+    </div>
+
+    <a href="https://wa.me/5518998112408" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="logo.png" alt="Buquesmari" class="logo-img-custom">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="galeria.html">Galeria</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="encomenda.html" class="active">Encomendar</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="order-header">
+        <div class="container reveal-up">
+            <span class="overline">VAMOS CRIAR JUNTOS</span>
+            <h1>Faça seu Pedido Personalizado</h1>
+            <p>Preencha os detalhes e receba um orçamento exclusivo via WhatsApp.</p>
+        </div>
+    </section>
+
+    <div class="steps-section reveal-up">
+        <div class="steps-container">
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-search"></i></div>
+                <h3>1. Escolha</h3>
+                <p>Inspire-se em nossa galeria.</p>
+            </div>
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-palette"></i></div>
+                <h3>2. Detalhes</h3>
+                <p>Defina cores e tamanho.</p>
+            </div>
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                <h3>3. Criação</h3>
+                <p>Produção artesanal.</p>
+            </div>
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-gift"></i></div>
+                <h3>4. Entrega</h3>
+                <p>Receba em casa.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-section reveal-up">
+            <div class="form-title">
+                <h2>Solicitar Orçamento</h2>
+                <p>É rápido e sem compromisso.</p>
+            </div>
+            
+            <form id="orderForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Seu Nome</label>
+                        <input type="text" id="name" placeholder="Como podemos te chamar?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">WhatsApp (com DDD)</label>
+                        <input type="tel" id="phone" placeholder="(XX) 99999-9999" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Data do Evento (Opcional)</label>
+                        <input type="date" id="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Tipo de Pedido</label>
+                        <select id="type">
+                            <option value="Buquê para Presente">Buquê para Presente</option>
+                            <option value="Arranjo Decorativo">Arranjo Decorativo</option>
+                            <option value="Buquê de Aniversário">Buquê de Aniversário</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="colors">Cores de Preferência</label>
+                        <input type="text" id="colors" placeholder="Ex: Azul e Branco">
+                        <div class="color-options">
+                            <div class="color-circle c-blue" onclick="fillColor('Azul')"></div>
+                            <div class="color-circle c-pink" onclick="fillColor('Rosa')"></div>
+                            <div class="color-circle c-red" onclick="fillColor('Vermelho')"></div>
+                            <div class="color-circle c-white" onclick="fillColor('Branco')"></div>
+                            <div class="color-circle c-purple" onclick="fillColor('Roxo')"></div>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="message">Detalhes Adicionais</label>
+                        <textarea id="message" rows="4" placeholder="Conte mais sobre o que você imagina..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <i class="fab fa-whatsapp"></i> <span>Enviar Solicitação no WhatsApp</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="direct-contact reveal-up">
+            <p>Quer ver mais fotos antes?</p>
+            <div class="direct-links">
+                <a href="https://instagram.com/buquesmari" target="_blank" class="btn-social">
+                    <i class="fab fa-instagram"></i> Ver nosso Instagram
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container center-text">
+            <p>&copy; 2024 Buquesmari. todos os direitos reservados.</p>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function fillColor(color) {
+            const input = document.getElementById('colors');
+            if (input.value) { input.value += ', ' + color; } else { input.value = color; }
+            input.focus();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+            window.scrollTo(0, 0);
+
+            setTimeout(() => {
+                const loader = document.getElementById('loader-wrapper');
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 800);
+            }, 1000);
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) { entry.target.classList.add('active'); }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            if(hamburger) {
+                hamburger.addEventListener('click', () => {
+                    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                    if(navMenu.style.display === 'flex') {
+                       navMenu.style.flexDirection = 'column';
+                       navMenu.style.position = 'absolute';
+                       navMenu.style.top = '120px';
+                       navMenu.style.left = '0';
+                       navMenu.style.width = '100%';
+                       navMenu.style.background = 'rgba(244,249,255,0.98)';
+                       navMenu.style.padding = '20px';
+                       navMenu.style.textAlign = 'center';
+                    }
+                });
+            }
+
+            const form = document.getElementById('orderForm');
+            const btn = document.getElementById('submitBtn');
+            const btnText = btn.querySelector('span');
+            const btnIcon = btn.querySelector('i');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                btn.style.backgroundColor = "#48bb78"; 
+                btnText.innerText = "Gerando Pedido...";
+                btnIcon.className = "fas fa-spinner fa-spin";
+
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const date = document.getElementById('date').value;
+                const type = document.getElementById('type').value;
+                const colors = document.getElementById('colors').value;
+                const message = document.getElementById('message').value;
+                const whatsappNumber = "5518998112408"; 
+
+                const text = `*Olá, vim pelo site! Gostaria de um orçamento.*%0A%0A` +
+                             `*Nome:* ${name}%0A` +
+                             `*Telefone:* ${phone}%0A` +
+                             `*Data do Evento:* ${date || 'Não informada'}%0A` +
+                             `*Tipo:* ${type}%0A` +
+                             `*Cores:* ${colors}%0A` +
+                             `*Detalhes:* ${message}`;
+
+                setTimeout(() => {
+                    window.open(`https://wa.me/${whatsappNumber}?text=${text}`, '_blank');
+                    btnText.innerText = "Solicitação Enviada!";
+                    btnIcon.className = "fas fa-check";
+                }, 1500);
+            });
+        });
+    </script>
+
+</body>
+</html>
