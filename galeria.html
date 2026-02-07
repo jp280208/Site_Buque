@@ -36,7 +36,15 @@
         .nav-menu { display: flex; gap: 35px; list-style: none; }
         .nav-menu a { text-decoration: none; color: var(--color-secondary); font-weight: 500; font-size: 0.95rem; transition: 0.3s; }
         .nav-menu a:hover, .nav-menu a.active { color: var(--color-primary); }
-        .hamburger { display: none; color: var(--color-primary); font-size: 1.5rem; cursor: pointer; }
+        
+        /* MUDANÇA: CSS para o ícone de pontinhos */
+        .hamburger { 
+            display: none; 
+            color: var(--color-primary); 
+            font-size: 1.5rem; 
+            cursor: pointer; 
+            padding: 10px;
+        }
 
         .gallery-page { padding-top: 120px; padding-bottom: 80px; text-align: center; }
         .header-content h1 { font-family: var(--font-heading); color: var(--color-primary); font-size: 3rem; margin-bottom: 10px; }
@@ -126,7 +134,7 @@
                 <li><a href="encomenda.html">Encomendar</a></li>
             </ul>
             <div class="hamburger">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-ellipsis-v"></i>
             </div>
         </div>
     </nav>
