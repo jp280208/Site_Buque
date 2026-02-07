@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buquesmari | Nossa História</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="logo.png" type="image/png">
+    
+    <style>
+    
+        :root {
+            --color-primary: #5b9bd5;    
+            --color-secondary: #6b8296;  
+            --color-accent: #87ceeb;     
+            --color-btn-hover: #6cbbe0;  
+            --bg-body: #f4f9ff;          
+            --bg-light: #e6f2ff;         
+            --bg-decoration: #dbeafe;    
+            --color-whatsapp: #25D366;   
+            --container-width: 1140px;
+            --navbar-height: 120px; /* ALTURA FIXA DA BARRA */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--color-secondary); background-color: var(--bg-body); line-height: 1.6; overflow-x: hidden; width: 100%; }
+        h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--color-primary); }
+        a { text-decoration: none; transition: all 0.3s ease; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; }
+
+        
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--navbar-height);
+            background: rgba(244, 249, 255, 0.98); backdrop-filter: blur(10px);
+            z-index: 1000; display: flex; justify-content: center; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .nav-container {
+            max-width: var(--container-width); width: 100%; height: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px;
+        }
+
+        .brand-logo { display: flex; align-items: center; height: 100%; text-decoration: none; }
+
+        .logo-img-custom {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .nav-menu { display: flex; gap: 40px; }
+        .nav-menu a { color: var(--color-secondary); font-weight: 500; font-size: 1rem; position: relative; }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--color-primary); }
+        .nav-menu a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--color-accent); transition: width 0.3s; }
+        .nav-menu a:hover::after { width: 100%; }
+
+        .hamburger { display: none; color: var(--color-primary); font-size: 1.8rem; cursor: pointer; }
+
+      
+        #loader-wrapper { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--bg-body); z-index: 9999; 
+            display: flex; justify-content: center; align-items: center; 
+            transition: opacity 0.8s; 
+        }
+        .loader-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        /* Círculo Aumentado para 300px */
+        .blob-bg { 
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 300px; 
+            height: 300px; 
+            background: #dbeafe; 
+            border-radius: 50%; 
+            animation: pulse 2s infinite; 
+            z-index: -1; 
+        }
+    
+        .loader-logo-img { width: 200px; margin-bottom: 20px; display: block; }
+        .loader-tag { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--color-secondary); font-weight: 600; }
+
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 10000; animation: pulse-green 2s infinite; text-decoration: none; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+    
+        .page-header {
+            padding-top: calc(var(--navbar-height) + 40px); 
+            padding-bottom: 50px; text-align: center;
+            background: radial-gradient(circle at top, #e6f2ff 0%, #f4f9ff 70%);
+        }
+        .page-header h1 { font-size: 3.5rem; margin-bottom: 20px; }
+        .page-header p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        .overline { display: block; font-size: 0.8rem; letter-spacing: 3px; color: var(--color-accent); font-weight: 600; text-transform: uppercase; margin-bottom: 15px; }
+
+        .story-section { padding: 80px 0; }
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; width: 100%; }
+        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        
+        .story-img-box { position: relative; }
+        .story-img-box img { width: 100%; box-shadow: 0 20px 40px rgba(91, 155, 213, 0.15); border: 1px solid white; border-radius: 20px; }
+        .story-img-box::before { content: ''; position: absolute; top: -20px; left: -20px; width: 100%; height: 100%; border: 2px solid var(--color-accent); border-radius: 20px; z-index: -1; opacity: 0.3; }
+
+        .story-text h2 { font-size: 2.5rem; margin-bottom: 25px; }
+        .story-text p { margin-bottom: 20px; font-size: 1.05rem; line-height: 1.8; }
+        .signature { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: var(--color-primary); margin-top: 20px; }
+
+        .values-section { background-color: white; padding: 80px 0; }
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 50px; }
+        .value-card { padding: 40px 30px; background: #f4f9ff; border-radius: 20px; text-align: center; transition: transform 0.3s; border: 1px solid #e6f3ff; }
+        .value-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(135, 206, 235, 0.15); }
+        .icon-box { width: 70px; height: 70px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.8rem; color: var(--color-accent); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .value-card h3 { font-size: 1.3rem; margin-bottom: 15px; }
+        .value-card p { font-size: 0.95rem; }
+
+        .process-banner { background-color: var(--color-primary); color: white; padding: 80px 0; text-align: center; border-radius: 20px; margin: 0 20px; }
+        .process-banner h2 { color: white; font-size: 2.5rem; margin-bottom: 20px; }
+        .process-banner p { color: rgba(255,255,255,0.9); max-width: 700px; margin: 0 auto 30px; font-size: 1.1rem; }
+        
+        .btn-white { background: white; color: var(--color-primary); padding: 14px 35px; border-radius: 30px; font-weight: 600; display: inline-block; text-decoration: none; transition: 0.3s; }
+        .btn-white:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        .main-footer { padding: 50px 0; border-top: 1px solid #dbeafe; margin-top: 50px; background-color: #f4f9ff; text-align: center; }
+        .footer-social { display: flex; gap: 20px; justify-content: center; margin-top: 10px; }
+        .footer-social a { color: var(--color-primary); font-size: 1.2rem; }
+        .center-text { text-align: center; }
+
+ 
+        @keyframes pulse { 0%{transform:translate(-50%,-50%) scale(1);} 50%{transform:translate(-50%,-50%) scale(1.05);} 100%{transform:translate(-50%,-50%) scale(1);} }
+        @keyframes pulse-green { 0%{box-shadow:0 0 0 0 rgba(37,211,102,0.7);} 70%{box-shadow:0 0 0 15px rgba(37,211,102,0);} 100%{box-shadow:0 0 0 0 rgba(37,211,102,0);} }
+        .reveal-up { opacity: 0; transform: translateY(30px); transition: 0.8s; }
+        .reveal-left { opacity: 0; transform: translateX(30px); transition: 0.8s; }
+        .active { opacity: 1; transform: translate(0); }
+        .delay-200 { transition-delay: 0.2s; }
+
+     
+        @media (max-width: 768px) {
+            :root { --navbar-height: 100px; }
+            .logo-img-custom { height: 60px !important; }
+            .page-header { padding-top: 140px; }
+            .page-header h1 { font-size: 2.5rem; }
+            .story-grid { grid-template-columns: 1fr; }
+            .nav-menu { display: none; }
+            .hamburger { display: block; }
+            .process-banner { margin: 0; border-radius: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <div class="blob-bg"></div>
+            <img src="logo.png" class="loader-logo-img" alt="Buquesmari Logo">
+            <p class="loader-tag">FLORES ETERNAS</p>
+        </div>
+    </div>
+
+    <a href="https://wa.me/55SEUNUMERO" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="logo.png" alt="Buquesmari" class="logo-img-custom">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="galeria.html">Galeria</a></li>
+                <li><a href="sobre.html" class="active">Sobre</a></li>
+                <li><a href="encomenda.html">Encomendar</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container reveal-up">
+            <span class="overline">SOBRE NÓS</span>
+            <h1>A Arte de Eternizar Momentos</h1>
+            <p>Conheça a história por trás dos buquês que nunca murcham e descubra o amor em cada detalhe.</p>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <div class="container story-grid">
+            <div class="story-img-box reveal-left">
+                <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=800&q=80" alt="Mariana no Atelier">
+            </div>
+            <div class="story-text reveal-up delay-200">
+                <h2>Olá, sou a Mariana</h2>
+                <p>Tudo começou com um desejo simples: criar algo que pudesse guardar a emoção de um dia especial para sempre. As flores naturais são lindas, mas efêmeras. Eu queria capturar essa beleza de uma forma que resistisse ao tempo.</p>
+                <p>Foi assim que nasceu a <strong>Buquesmari</strong>. Cada pétala de cetim é moldada à mão, queimada nas bordas para selar e montada com paciência e carinho. Não é apenas um buquê; é uma peça de arte feita exclusivamente para você.</p>
+                <p>Nosso atelier é movido pela paixão de transformar fitas em sonhos, garantindo que a noiva, a debutante ou quem recebe o presente possa olhar para ele daqui a 10 anos e sentir a mesma alegria do primeiro dia.</p>
+                <p class="signature">- Mariana, Fundadora</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="values-section">
+        <div class="container">
+            <div class="center-text reveal-up">
+                <span class="overline">NOSSOS PILARES</span>
+                <h2>Por que escolher Cetim?</h2>
+            </div>
+            <div class="values-grid">
+                <div class="value-card reveal-up">
+                    <div class="icon-box"><i class="fas fa-infinity"></i></div>
+                    <h3>Durabilidade Eterna</h3>
+                    <p>Diferente das flores naturais, nossos buquês não murcham, não secam e não perdem a cor. Uma lembrança viva para sempre.</p>
+                </div>
+                <div class="value-card reveal-up delay-200">
+                    <div class="icon-box"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3>100% Artesanal</h3>
+                    <p>Nenhuma máquina substitui o toque humano. Cada flor é única, com imperfeições propositais que imitam a natureza.</p>
+                </div>
+                <div class="value-card reveal-up delay-200">
+                    <div class="icon-box"><i class="fas fa-palette"></i></div>
+                    <h3>Personalização</h3>
+                    <p>Você escolhe a cor exata, o tipo de flor e os acessórios (pérolas, broches) para combinar perfeitamente com seu evento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="process-banner reveal-up">
+            <h2>Pronta para criar o seu?</h2>
+            <p>Vamos conversar sobre as cores, o estilo e os detalhes do seu buquê dos sonhos.</p>
+            <a href="encomenda.html" class="btn-white">Solicitar Orçamento</a>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container center-text">
+            <p>&copy; 2024 Buquesmari. todos os direitos reservados.</p>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+            window.scrollTo(0, 0);
+
+            // Loader
+            setTimeout(() => {
+                const loader = document.getElementById('loader-wrapper');
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 800);
+            }, 1500);
+
+          
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) { entry.target.classList.add('active'); }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-up, .reveal-left').forEach(el => observer.observe(el));
+
+           
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            if(hamburger) {
+                hamburger.addEventListener('click', () => {
+                    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                    if(navMenu.style.display === 'flex') {
+                       navMenu.style.flexDirection = 'column';
+                       navMenu.style.position = 'absolute';
+                       navMenu.style.top = '120px';
+                       navMenu.style.left = '0';
+                       navMenu.style.width = '100%';
+                       navMenu.style.background = 'rgba(244,249,255,0.98)';
+                       navMenu.style.padding = '20px';
+                       navMenu.style.textAlign = 'center';
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
