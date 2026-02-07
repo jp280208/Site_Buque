@@ -47,7 +47,6 @@
         
         .brand-logo { display: flex; align-items: center; height: 100%; text-decoration: none; }
         
-      
         .logo-img-custom {
             height: 100px; 
             width: auto;
@@ -62,9 +61,15 @@
         .nav-menu a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--color-accent); transition: width 0.3s; }
         .nav-menu a:hover::after { width: 100%; }
         
-        .hamburger { display: none; color: var(--color-primary); font-size: 1.8rem; cursor: pointer; }
+        /* Estilo do ícone Mobile (Três Pontinhos) */
+        .hamburger { 
+            display: none; 
+            color: var(--color-primary); 
+            font-size: 1.8rem; 
+            cursor: pointer; 
+            padding: 10px;
+        }
 
-      
         #loader-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s; }
         
         .loader-content {
@@ -76,7 +81,6 @@
             z-index: 2;
         }
 
-     
         .blob-bg { 
             position: absolute; 
             top: 50%; left: 50%; 
@@ -98,7 +102,7 @@
 
   
         .order-header {
-            padding-top: calc(var(--navbar-height) + 40px); /* 160px */
+            padding-top: calc(var(--navbar-height) + 40px);
             padding-bottom: 40px; text-align: center;
         }
         .order-header h1 { font-size: 3rem; margin-bottom: 15px; }
@@ -188,7 +192,7 @@
                 <li><a href="encomenda.html" class="active">Encomendar</a></li>
             </ul>
             <div class="hamburger">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-ellipsis-v"></i>
             </div>
         </div>
     </nav>
@@ -348,12 +352,11 @@
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 
-                // Muda a cor do botão visualmente
+                // Feedback visual imediato
                 btn.style.backgroundColor = "#48bb78"; 
                 btnText.innerText = "Redirecionando...";
-                btnIcon.className = "fas fa-whatsapp";
+                btnIcon.className = "fas fa-whatsapp"; 
 
-                // Coleta os dados
                 const name = document.getElementById('name').value;
                 const phone = document.getElementById('phone').value;
                 const date = document.getElementById('date').value;
@@ -363,21 +366,22 @@
                 const whatsappNumber = "5518998112408"; 
 
                 // Monta a mensagem
-                const msgContent = `*Olá, vim pelo site! Gostaria de um orçamento.*\n\n` +
-                             `*Nome:* ${name}\n` +
-                             `*Telefone:* ${phone}\n` +
-                             `*Data do Evento:* ${date || 'Não informada'}\n` +
-                             `*Tipo:* ${type}\n` +
-                             `*Cores:* ${colors}\n` +
-                             `*Detalhes:* ${message}`;
+                let msgContent = `*Olá, vim pelo site! Gostaria de um orçamento.*\n\n`;
+                msgContent += `*Nome:* ${name}\n`;
+                msgContent += `*Telefone:* ${phone}\n`;
+                msgContent += `*Data do Evento:* ${date || 'Não informada'}\n`;
+                msgContent += `*Tipo:* ${type}\n`;
+                msgContent += `*Cores:* ${colors}\n`;
+                msgContent += `*Detalhes:* ${message}`;
 
-                // Codifica para URL segura
+                // Codifica e abre
                 const encodedMsg = encodeURIComponent(msgContent);
-                
-                // Abre o WhatsApp IMEDIATAMENTE (sem setTimeout) para evitar bloqueio
-                window.open(`https://wa.me/${whatsappNumber}?text=${encodedMsg}`, '_blank');
+                const fullUrl = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
 
-                // Atualiza o texto do botão
+                // ABRE IMEDIATAMENTE
+                window.open(fullUrl, '_blank');
+
+                // Atualiza o botão
                 btnText.innerText = "Solicitação Enviada!";
                 btnIcon.className = "fas fa-check";
             });
