@@ -1,0 +1,73 @@
+/* --- EFEITO DE BRILHO NOS BOTÕES (Premium) --- */
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    color: white;
+    box-shadow: 0 8px 20px rgba(91, 155, 213, 0.3);
+    position: relative;
+    overflow: hidden; /* Mantém o brilho dentro do botão */
+    z-index: 1;
+    border: none;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: skewX(-25deg);
+    animation: shine 3s infinite; /* Feixe de luz passando */
+    z-index: -1;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; }
+}
+
+.btn-primary:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 12px 25px rgba(91, 155, 213, 0.4); 
+}
+
+/* --- CARTÕES DOS BUQUÊS (Efeito Mola e Zoom) --- */
+.product-card {
+    background: white; 
+    border-radius: 16px; 
+    overflow: hidden;
+    /* Transição cubic-bezier dá um efeito de "mola" muito elegante */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    border: 1px solid rgba(225, 239, 254, 0.8); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.product-card:hover { 
+    transform: translateY(-15px) scale(1.02); 
+    box-shadow: 0 25px 50px rgba(135, 206, 235, 0.2); 
+    border-color: var(--color-accent);
+}
+
+.card-image img { 
+    width: 100%; height: 100%; object-fit: cover; 
+    transition: transform 0.8s ease; /* Zoom mais suave e demorado */
+}
+
+.product-card:hover .card-image img { 
+    transform: scale(1.12); /* Zoom intenso na foto destacando as rosas */
+}
+
+/* --- NOVAS ANIMAÇÕES DE SCROLL (Suavidade) --- */
+.reveal-up { 
+    opacity: 0; 
+    transform: translateY(50px); 
+    transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); 
+}
+
+.reveal-zoom { 
+    opacity: 0; 
+    transform: scale(0.85) translateY(30px); 
+    transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); 
+}
+
+.active { opacity: 1; transform: translate(0) scale(1); }
