@@ -26,8 +26,8 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; color: var(--color-secondary); background-color: var(--bg-body); line-height: 1.6; overflow-x: hidden; width: 100%; }
+        html { scroll-behavior: smooth; font-size: 100%; transition: font-size 0.3s ease; }
+        body { font-family: 'Inter', sans-serif; color: var(--color-secondary); background-color: var(--bg-body); line-height: 1.6; overflow-x: hidden; width: 100%; transition: all 0.3s ease; }
         h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--color-primary); }
         a { text-decoration: none; transition: all 0.3s ease; }
         ul { list-style: none; }
@@ -51,21 +51,33 @@
         .petal { position: absolute; top: -10%; width: 25px; height: 25px; background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%); border-radius: 50% 0 50% 50%; opacity: 0.7; animation: fall linear infinite; box-shadow: 0 0 10px rgba(91, 155, 213, 0.4); }
         @keyframes fall { 0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; } 10% { opacity: 0.9; } 80% { opacity: 0.9; } 100% { transform: translateY(110vh) rotate(720deg) translateX(100px); opacity: 0; } }
         .loader-content { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; }
-        
-        .elegant-ring {
-            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
-            width: 250px; height: 250px; border: 2px solid transparent;
-            border-top-color: var(--color-accent); border-bottom-color: var(--color-primary);
-            border-radius: 50%; animation: spin 2s linear infinite; z-index: -1;
-        }
+        .elegant-ring { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 250px; border: 2px solid transparent; border-top-color: var(--color-accent); border-bottom-color: var(--color-primary); border-radius: 50%; animation: spin 2s linear infinite; z-index: -1; }
         @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-        
         .loader-logo-img { width: 200px; margin-bottom: 20px; display: block; animation: float 3s ease-in-out infinite;}
         .loader-tag { font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; color: var(--color-primary); font-weight: 600; }
 
-        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 10000; animation: pulse-green 2s infinite; text-decoration: none; }
+        /* WHATSAPP & ACESSIBILIDADE */
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 9000; animation: pulse-green 2s infinite; text-decoration: none; }
         .whatsapp-float:hover { transform: scale(1.1); }
+        
+        .accessibility-wrapper { position: fixed; top: 60%; right: 15px; z-index: 9000; display: flex; flex-direction: column; align-items: flex-end; }
+        .acc-toggle { width: 45px; height: 45px; border-radius: 50%; background: var(--color-primary); color: white; border: none; font-size: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+        .acc-toggle:hover { transform: scale(1.1); background: var(--color-accent); }
+        .acc-menu { position: absolute; top: 0; right: 55px; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; opacity: 0; pointer-events: none; transition: 0.3s; transform: translateX(20px); width: 250px; }
+        .acc-menu.show { opacity: 1; pointer-events: auto; transform: translateX(0); }
+        .acc-menu button { padding: 14px 20px; border: none; background: transparent; border-bottom: 1px solid #f4f9ff; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; color: var(--color-secondary); transition: 0.3s; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; text-align: left; }
+        .acc-menu button i { color: var(--color-primary); font-size: 1.1rem; width: 20px; text-align: center; }
+        .acc-menu button:hover { background: var(--bg-body); color: var(--color-primary); padding-left: 25px; }
 
+        html.acc-large { font-size: 115% !important; }
+        html.acc-xlarge { font-size: 130% !important; }
+        body.acc-contrast { filter: invert(1) hue-rotate(180deg); background-color: #111; }
+        body.acc-contrast img, body.acc-contrast .falling-petals, body.acc-contrast .story-img-box img { filter: invert(1) hue-rotate(180deg); }
+        body.acc-grayscale { filter: grayscale(100%); }
+        body.acc-readable * { font-family: Arial, Helvetica, sans-serif !important; letter-spacing: 0.5px; }
+        body.acc-links a { text-decoration: underline !important; font-weight: 800 !important; background-color: #ffeb3b !important; color: #000 !important; padding: 2px 4px; border-radius: 4px; }
+
+        /* SOBRE */
         .page-header { padding-top: calc(var(--navbar-height) + 40px); padding-bottom: 50px; text-align: center; background: radial-gradient(circle at top, #e6f2ff 0%, #f4f9ff 70%); }
         .page-header h1 { font-size: 3.5rem; margin-bottom: 20px; }
         .page-header p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
@@ -94,7 +106,6 @@
         .process-banner { background: linear-gradient(135deg, var(--color-accent), var(--color-primary)); color: white; padding: 80px 0; text-align: center; border-radius: 24px; margin: 0 20px; box-shadow: 0 20px 40px rgba(91, 155, 213, 0.3); }
         .process-banner h2 { color: white; font-size: 2.5rem; margin-bottom: 20px; }
         .process-banner p { color: rgba(255,255,255,0.9); max-width: 700px; margin: 0 auto 40px; font-size: 1.1rem; }
-        
         .btn-white { background: white; color: var(--color-primary); padding: 18px 40px; border-radius: 30px; font-weight: 700; font-size: 1.1rem; display: inline-block; text-decoration: none; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .btn-white:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
 
@@ -142,6 +153,22 @@
             <div class="elegant-ring"></div>
             <img src="logo.png" class="loader-logo-img" alt="Buquesmari Logo">
             <p class="loader-tag">FLORES ETERNAS</p>
+        </div>
+    </div>
+
+    <!-- ACESSIBILIDADE PERSONALIZADA -->
+    <div class="accessibility-wrapper">
+        <button class="acc-toggle" id="accToggle" title="Acessibilidade">
+            <i class="fas fa-universal-access"></i>
+        </button>
+        <div class="acc-menu" id="accMenu">
+            <button id="btnIncreaseFont"><i class="fas fa-search-plus"></i> Aumentar Texto</button>
+            <button id="btnDecreaseFont"><i class="fas fa-search-minus"></i> Diminuir Texto</button>
+            <button id="btnContrast"><i class="fas fa-adjust"></i> Alto Contraste</button>
+            <button id="btnGrayscale"><i class="fas fa-tint-slash"></i> Escala de Cinza</button>
+            <button id="btnReadable"><i class="fas fa-font"></i> Fonte Legível</button>
+            <button id="btnLinks"><i class="fas fa-link"></i> Destacar Links</button>
+            <button id="btnReset"><i class="fas fa-undo"></i> Restaurar Padrão</button>
         </div>
     </div>
 
@@ -235,7 +262,16 @@
         </div>
     </footer>
 
+    <!-- VLIBRAS -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    </div>
+
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+
         document.addEventListener('DOMContentLoaded', () => {
             if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
             window.scrollTo(0, 0);
@@ -245,6 +281,33 @@
                 loader.style.opacity = '0';
                 setTimeout(() => { loader.style.display = 'none'; }, 800);
             }, 1800);
+
+            // Acessibilidade Totalmente Funcional
+            const accToggle = document.getElementById('accToggle');
+            const accMenu = document.getElementById('accMenu');
+            const rootHtml = document.documentElement;
+            const bodyEl = document.body;
+            let fontLevel = 0;
+            
+            accToggle.addEventListener('click', () => accMenu.classList.toggle('show'));
+            
+            document.getElementById('btnIncreaseFont').addEventListener('click', () => {
+                if(fontLevel === 0) { rootHtml.classList.add('acc-large'); fontLevel++; }
+                else if(fontLevel === 1) { rootHtml.classList.remove('acc-large'); rootHtml.classList.add('acc-xlarge'); fontLevel++; }
+            });
+            document.getElementById('btnDecreaseFont').addEventListener('click', () => {
+                rootHtml.classList.remove('acc-large', 'acc-xlarge'); fontLevel = 0;
+            });
+            document.getElementById('btnContrast').addEventListener('click', () => bodyEl.classList.toggle('acc-contrast'));
+            document.getElementById('btnGrayscale').addEventListener('click', () => bodyEl.classList.toggle('acc-grayscale'));
+            document.getElementById('btnReadable').addEventListener('click', () => bodyEl.classList.toggle('acc-readable'));
+            document.getElementById('btnLinks').addEventListener('click', () => bodyEl.classList.toggle('acc-links'));
+            
+            document.getElementById('btnReset').addEventListener('click', () => {
+                rootHtml.classList.remove('acc-large', 'acc-xlarge');
+                bodyEl.classList.remove('acc-contrast', 'acc-grayscale', 'acc-readable', 'acc-links');
+                fontLevel = 0;
+            });
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
